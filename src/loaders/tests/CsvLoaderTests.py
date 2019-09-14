@@ -39,7 +39,7 @@ class CsvLoaderTest(unittest.TestCase):
             "low": 3,
             "close": 4,
             "volume": 5}
-        data = CsvLoader(example_data_path_2, params=custom_params).load_data()
+        data = CsvLoader(example_data_path_2, params=custom_params, data_transformations={}).load_data()
         for key in data.keys():
             print(key, " -> ", data[key][:5])
         print("*********************************\n")
