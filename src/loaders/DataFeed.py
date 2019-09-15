@@ -1,5 +1,5 @@
 from typing import List, Dict, Union
-from src.loaders.tests.StreamDataConnector import StreamDataConnector
+from src.loaders.StreamDataConnector import StreamDataConnector
 from src.simulators.Strategy import Strategy
 
 
@@ -27,7 +27,7 @@ class DataFeed:
             self.data = data_source
         self.strategies_to_feed: List[Strategy] = []
 
-    def connect_simulator_to_data_feed(self, strategy: Strategy):
+    def subscribe_strategy(self, strategy: Strategy):
         """
         By passing strategy to this method, strategy becomes subscriber of this data feed
         :param strategy:
@@ -65,7 +65,7 @@ class DataFeed:
         :return:
         """
         self.previous_data = {}
-        for i in range(len(self.data[self.data.keys()[0]])):
+        for i in range(len(self.data[[key for key in self.data][0]])):
             new_data = {}
             for key in self.data.keys():
                 if key not in self.previous_data:

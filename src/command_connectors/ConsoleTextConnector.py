@@ -1,5 +1,4 @@
 from typing import Dict, List
-
 from src.command_connectors.CommandConnector import CommandConnector
 
 

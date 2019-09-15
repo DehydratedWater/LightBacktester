@@ -11,14 +11,9 @@ class Strategy:
     on_init method should be threted as constructor
     on_tick_data method is updated with every new data bit
     """
+
     def __init__(self, command_connector: CommandConnector):
         self.command = command_connector
-        self.on_init()
-
-    @abstractmethod
-    def on_init(self) -> Union[str, None]:
-        """This method should init all necessary data for strategy"""
-        pass
 
     @abstractmethod
     def on_tick_data(self, data: Dict[str, List[any]], new_data: Dict[str, List[any]]) -> Union[str, None]:

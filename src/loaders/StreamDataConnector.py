@@ -1,8 +1,7 @@
-from src.loaders.DataFeed import DataFeed
-
 
 class StreamDataConnector:
     def __init__(self):
+        from src.loaders.DataFeed import DataFeed
         self.data_feed_to_update: DataFeed = None
 
     def set_data_feed(self, data_feed):

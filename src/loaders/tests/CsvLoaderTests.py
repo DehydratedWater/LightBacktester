@@ -5,8 +5,9 @@ from src.loaders.CsvLoader import CsvLoader
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-example_data_path_1 = os.path.join(__location__, "DAT_MT_EURUSD_M1_201908.csv")
-example_data_path_2 = os.path.join(__location__, "DAT_ASCII_EURUSD_M1_2018.csv")
+local_path = __location__.split("src\\", 1)[0]
+example_data_path_1 = str(local_path)+"src/example_data/DAT_MT_EURUSD_M1_201908.csv"
+example_data_path_2 = str(local_path)+"src/example_data/DAT_ASCII_EURUSD_M1_2018.csv"
 
 
 class CsvLoaderTest(unittest.TestCase):
