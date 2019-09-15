@@ -17,6 +17,7 @@ default_transformations = {
     "datetime": '%H:%M'
 }
 
+
 class CsvLoader:
     """Class for opening csv files"""
 
