@@ -25,12 +25,20 @@ class CsvLoader:
                  path,
                  params: Dict[str, int] = default_params,
                  data_transformations: Dict[str, str] = default_transformations):
-
+        """
+        :param path: path to csv file
+        :param params: types of data that is writen in csv file with number of columns,
+            -1 means that this data is not in file
+        :param data_transformations: Allows for specification of data formatting in file, to parse it to datetime object
+        """
         self.loading_params = params
         self.path = path
         self.data_transformations = data_transformations
 
     def load_data(self):
+        """
+        :return: Dictionary with arrays of data from csv file, after all transformations
+        """
         raw_data = pd.read_csv(self.path)
         data = {}
         for key in self.loading_params.keys():
