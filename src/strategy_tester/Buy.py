@@ -14,10 +14,9 @@ class Buy(Transaction):
                  trailing_stop_loss: List[Callable[[Dict[str, any], Dict[str, any]], (float, float)]] = None):
         self.open_price = open_price
         self.opened_with_price = 0
-        self.close_price = -1
-        self.transaction_opened = False
+        self.closed_with_price = []
         self.vol_opened = vol
-        self.vol_closed = 0
+        self.vol_closed = []
         self.slippage = slippage
         self.stop_loss = stop_loss
         self.take_profit = take_profit
@@ -29,23 +28,37 @@ class Buy(Transaction):
                 return True
             return False
         if price is not None:
-            if price["bid"] - self.slippage <= self.open_price <= price["bid"]:
+            if price["ask"] <= self.open_price <= price["ask"] + self.slippage:
                 return True
             return False
 
     def open(self, candle: Dict[str, any] = None, price: Dict[str, any] = None):
         if candle is not None:
             self.opened_with_price = self.open_price
-            self.transaction_opened = True
         if price is not None:
-            self.opened_with_price = price["bid"]
-            self.transaction_opened = True
+            self.opened_with_price = price["ask"]
 
-    def update_auto_close(self, candle: Dict[str, any] = None, price: Dict[str, any] = None) -> int:
+    def update_auto_close(self, candle: Dict[str, any] = None, price: Dict[str, any] = None) -> float:
         pass
 
-    def close(self, candle: Dict[str, any] = None, price: Dict[str, any] = None):
-        pass
+    def can_be_closed(self, close_price: float, candle: Dict[str, any] = None, price: Dict[str, any] = None) -> bool:
+        if candle is not None:
+            if candle["low"] <= close_price <= candle["high"]:
+                return True
+            return False
+        if price is not None:
+            if price["bid"] - self.slippage <= self.open_price <= price["bid"]:
+                return True
+            return False
+
+    def close(self, close_price: float, close_vol: float, candle: Dict[str, any] = None, price: Dict[str, any] = None):
+        if candle is not None:
+            self.closed_with_price.append(close_price)
+            self.vol_closed.append(close_vol)
+        if price is not None:
+            self.closed_with_price.append(price["bid"])
+            self.vol_closed.append(close_vol)
 
     def is_closed(self) -> bool:
-        pass
+        return self.vol_opened == self.vol_closed
+

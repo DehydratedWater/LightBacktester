@@ -13,11 +13,15 @@ class Transaction(ABC):
         pass
 
     @abstractmethod
-    def update_auto_close(self, candle: Dict[str, any] = None, price: Dict[str, any] = None) -> int:
+    def update_auto_close(self, candle: Dict[str, any] = None, price: Dict[str, any] = None) -> float:
         pass
 
     @abstractmethod
-    def close(self, candle: Dict[str, any] = None, price: Dict[str, any] = None):
+    def can_be_closed(self, close_price: float, candle: Dict[str, any] = None, price: Dict[str, any] = None) -> bool:
+        pass
+
+    @abstractmethod
+    def close(self, close_price: float, close_vol: float, candle: Dict[str, any] = None, price: Dict[str, any] = None):
         pass
 
     @abstractmethod
