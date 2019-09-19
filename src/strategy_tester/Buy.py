@@ -17,6 +17,7 @@ class Buy(Transaction):
         self.closed_with_price = []
         self.vol_opened = vol
         self.vol_closed = []
+        self.sum_vol_closed = 0
         self.slippage = slippage
         self.stop_loss = stop_loss
         self.take_profit = take_profit
@@ -55,10 +56,12 @@ class Buy(Transaction):
         if candle is not None:
             self.closed_with_price.append(close_price)
             self.vol_closed.append(close_vol)
+            self.sum_vol_closed += close_vol
         if price is not None:
             self.closed_with_price.append(price["bid"])
             self.vol_closed.append(close_vol)
+            self.sum_vol_closed += close_vol
 
     def is_closed(self) -> bool:
-        return self.vol_opened == self.vol_closed
+        return self.vol_opened == self.sum_vol_closed
 
